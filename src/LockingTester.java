@@ -3,7 +3,7 @@
  * in three different ways: optimistic locking, pessimistic locking,
  * and setting the isolation levels in the database itself.
  *
- * @author Ken Ritley based on Stefan Fischli's wonderful idea and code!
+ * @author Stefan Fischli with small modifications by Dr. Ken
  * @since 2023-05-24
  * @version 1.1
  */
@@ -75,7 +75,7 @@ public class LockingTester {
 		statement.executeUpdate("CREATE TABLE DATA (ID INTEGER, VALUE VARCHAR(255), VERSION INTEGER, PRIMARY KEY (ID))");
 		statement.executeUpdate("INSERT INTO DATA VALUES (1, '$', 0)");
 		connection.close();
-	}
+	} // End of method initDatabase
 
 	/**
  	 * Have a good look at the SQL statement used to update the table. It is just
@@ -114,7 +114,7 @@ public class LockingTester {
 		} catch (Exception ex) {
 			System.out.println(threadName + " Update failed: " + ex.getMessage());
 		}
-	}
+	} // End of method updateWithoutLocking
 
 	/**
  	 * Have a good look at the SQL statement used to update the table. It
@@ -161,7 +161,7 @@ public class LockingTester {
 		} catch (Exception ex) {
 			System.out.println(threadName + " Update failed: " + ex.getMessage());
 		}
-	}
+	} // End of method updateWithOptimisticLocking
 
 	/**
  	 * Have a good look at the SQL statement used to update the table. It
@@ -200,7 +200,7 @@ public class LockingTester {
 		} catch (Exception ex) {
 			System.out.println(threadName + " Update failed: " + ex.getMessage());
 		}
-	}
+	} // End of method updateWithPessimisticLocking
 
 	/**
  	 * Have a good look at the SQL statement used to update the table. It
@@ -230,7 +230,7 @@ public class LockingTester {
 			Thread.sleep(1000);
 			value = value + '$';
 
-			// write Value
+			// write value
 			statement = connection.prepareStatement("UPDATE DATA SET VALUE=? WHERE ID=1");
 			statement.setString(1, value);
 			int rows = statement.executeUpdate();
@@ -245,4 +245,4 @@ public class LockingTester {
 			System.out.println(threadName + " Update failed: " + ex.getMessage());
 		}
 	}
-}
+} // End of method updateWithIsolationLevel
